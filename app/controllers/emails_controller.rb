@@ -5,14 +5,22 @@ class EmailsController < ApplicationController
     if email.save
       email.attempt_delivery
 
-      if email.sent?
+      if email.sent? || email.queued?
         return render(
-          json: { email_id: email.id, status: email.status },
+          json: {
+            email_id: email.id,
+            status: email.status,
+            provider_id: email.provider_id
+          },
           status: :created
         )
       else
         return render(
-          json: { email_id: email.id, status: email.status, errors: email.failure_msg },
+          json: {
+            email_id: email.id,
+            status: email.status,
+            errors: email.failure_msg
+          },
           status: :internal_server_error
         )
       end

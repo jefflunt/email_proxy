@@ -42,20 +42,23 @@ class Email < ApplicationRecord
   # probably want to pull this out into its own module.
   def spendgrid
     begin
-      response = Net::HTTP.post(
-        URI('https://bw-interviews.herokuapp.com/spendgrid/send_email'),
-        {
-          "sender": "#{from_name} <#{from}>",
-          "recipient": "#{to_name} <#{to}>",
-          "subject": subject,
-          "body": body
-        }.to_json,
-        {
-          "Content-Type" => "application/json",
-          "x-api-key" => "api_key_GeQoxAP64rGyXFyRjmD96D0g"
-        }
+      response_body = JSON.parse(
+        Net::HTTP.post(
+          URI('https://bw-interviews.herokuapp.com/spendgrid/send_email'),
+          {
+            "sender": "#{from_name} <#{from}>",
+            "recipient": "#{to_name} <#{to}>",
+            "subject": subject,
+            "body": body
+          }.to_json,
+          {
+            "Content-Type" => "application/json",
+            "x-api-key" => "api_key_GeQoxAP64rGyXFyRjmD96D0g"
+          }
+        ).body
       )
 
+      record_success(response_body['id'])
       sent!
     rescue => e
       record_exception(e)
@@ -64,9 +67,34 @@ class Email < ApplicationRecord
 
   def snailgun
     begin
+      response_body = JSON.parse(
+        Net::HTTP.post(
+          URI('https://bw-interviews.herokuapp.com/snailgun/emails'),
+          {
+            "from_email": from,
+            "from_name": from_name,
+            "to_email": to,
+            "to_name": to_name,
+            "subject": subject,
+            "body": body
+          }.to_json,
+          {
+            "Content-Type" => "application/json",
+            "x-api-key" => "api_key_8tSAufx0tUmlPJ0raTEaYCYp"
+          }
+        ).body
+      )
+
+      record_success(response_body['id'])
+      self.send("#{response_body['status']}!".to_sym)
     rescue => e
       record_exception(e)
     end
+  end
+
+  def record_success(provider_id)
+    self.provider_id = provider_id
+    self.save
   end
 
   def record_exception(e)
