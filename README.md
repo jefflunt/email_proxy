@@ -138,7 +138,11 @@ an MVP that's manually tested, this is okayish.
     * Email sending methods
 * Handle polling for emails from snailgun - right now I just record the status
   from snailgun (queued, sent, failed) and don't poll for an updated status
-* Done some basic cleanup
+* Get clarification on the requirement, "Convert the body HTML to plaintext
+  version" - HTML is already text, and the examples include HTML tags, so I'm
+  not sure if the requirement is to remove the tags (easy enough to do with
+  nokogiri), or something else. For now I left it as-is
+* not sure if something Done some basic cleanup
   * Don't hard-code API keys
   * If we thought we were going to add more providers, I'd pull the email
     integration out into their own class/module, rather than have them in one
