@@ -65,6 +65,28 @@ This service makes use of UUID `:id` fields for records. This requires the
 service was tested against PostgreSQL 12.x, and should work with newer versions
 as well.
 
+## Language, framework choices, and why
+
+Rails is good. I've used Sinatra, golang/gin, and played around with things like
+AWS Lambda, but Rails is solid, reliable, has an API endpoint, and offers so
+much else even thought this is just a single endpoint. While I'm a big fan of
+minimizing the number of moving parts involved in a system, I'm also a fan of
+well-organized monoliths vs. microservices -- not that you have to choose one
+end or the other, but the great things about tools built for monoliths is that
+they tend to have _excellent_ ecosystems, which is why using them even for small
+things tends to be a good idea.
+
+As far as libraries that I use, I'm using pretty vanilla stuff here - nothing
+crazy. PostgreSQL (great if you want an open source database), and no message
+queues or exotic tech, or over-leveraging tools from AWS. A single endpoint for
+now that has a few edge cases in its business rules? Yeah, Rails is great at
+that, and Ruby especially because it does a great job of balacing expressiveness
+with a lack of unnecessary ceremony.
+
+I guess what I'm saying is that I chose rails because it's the boring,
+battle-tested, totally-will-work-in-this-situation-without-question solution
+with plenty of room to grow if needed.
+
 ## Allowing more time
 
 ### System design
