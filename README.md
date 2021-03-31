@@ -15,6 +15,8 @@ emails.
 
 ### Database
 
+#### Database as message queue
+
 `email_proxy` uses a database as a message queue, and relies on PostgreSQL.
 Check the `config/database.yml` file for the database names and roles. For local
 development it is recommended that you give the `email_proxy` role the following
@@ -23,6 +25,8 @@ permissions:
 * login
 * createdb
 * superuser
+
+#### Setting up the DB role and starting databases
 
 When the role is setup correctly for local dev, running `\dg` inside of `psql`
 should should the following attributes:
@@ -47,3 +51,10 @@ should show the development and test databases.
  email_proxy      | jlunt           | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
  email_proxy_test | jlunt           | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
 ```
+
+#### Required PostgreSQL extensions
+
+This service makes use of UUID `:id` fields for records. This requires the
+`uuid-ossp` and `pgcrytpo` extensions be available in your PostgreSQL. This
+service was tested against PostgreSQL 12.x, and should work with newer versions
+as well.
