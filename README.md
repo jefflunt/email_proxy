@@ -4,8 +4,8 @@ A service acting as a proxy between emails that need to be sent and the various
 providers we support. This initial version supports switching between two
 providers, Snailgun and Spendgrid, via changing the environment variable
 `ENV['EMAIL_PROXY_PROVIDER']`, and takes one of two values: `spendgrid` or
-`snailgun`. If the environment variable either not set, or does not contain one
-of these values, then Spendgrid will be used by default.
+`snailgun`. If the environment variable is not set, then  Spendgrid will be
+used by default.
 
 ## Install
 
