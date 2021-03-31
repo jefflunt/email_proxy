@@ -1,15 +1,15 @@
 class EmailsController < ApplicationController
   def create
-    email = Email.create(email_params)
+    email = Email.new(email_params)
 
-    if email
+    if email.save
       return render(
         json: { id: email.id },
         status: :created
       )
     else
       return render(
-        json: { err: { msgs: email.errors.messages } },
+        json: { errors: email.errors.messages },
         status: :unprocessable_entity
       )
     end
