@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 2021_03_31_174039) do
 
   create_table "emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "provider_id"
-    t.string "from_email", null: false
+    t.string "from", null: false
     t.string "from_name", null: false
-    t.string "to_email", null: false
+    t.string "to", null: false
     t.string "to_name", null: false
     t.string "subject", null: false
     t.text "body", null: false

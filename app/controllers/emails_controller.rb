@@ -1,6 +1,6 @@
 class EmailsController < ApplicationController
   def create
-    email = Email.create(email_params(params))
+    email = Email.create(email_params)
 
     if email
       return render(
@@ -16,7 +16,7 @@ class EmailsController < ApplicationController
   end
 
   private
-    def _email_params
+    def email_params
       params
         .require(:email)
         .permit(:to, :to_name, :from, :from_name, :subject, :body)
