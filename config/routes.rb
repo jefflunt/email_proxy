@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   defaults format: :json do
-    resources :emails, only: :create
+    post '/email', to: 'emails#create'
   end
 end
