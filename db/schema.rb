@@ -26,6 +26,9 @@ ActiveRecord::Schema.define(version: 2021_03_31_174039) do
     t.string "subject", null: false
     t.text "body", null: false
     t.integer "status", default: 0, null: false
+    t.text "failure_msg"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

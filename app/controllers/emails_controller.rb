@@ -3,13 +3,22 @@ class EmailsController < ApplicationController
     email = Email.new(email_params)
 
     if email.save
-      return render(
-        json: { id: email.id },
-        status: :created
-      )
+      email.attempt_delivery
+
+      if email.sent?
+        return render(
+          json: { email_id: email.id, status: email.status },
+          status: :created
+        )
+      else
+        return render(
+          json: { email_id: email.id, status: email.status, errors: email.failure_msg },
+          status: :internal_server_error
+        )
+      end
     else
       return render(
-        json: { errors: email.errors.messages },
+        json: { status: email.status, errors: email.errors.messages },
         status: :unprocessable_entity
       )
     end

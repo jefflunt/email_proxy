@@ -12,6 +12,9 @@ class InitialSchema < ActiveRecord::Migration[6.1]
       t.string :subject, null: false
       t.text :body, null: false
       t.integer :status, null: false, default: 0
+      t.text :failure_msg, null: true
+
+      t.timestamps
     end
   end
 end
